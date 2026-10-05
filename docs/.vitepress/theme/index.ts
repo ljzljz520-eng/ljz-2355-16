@@ -2,10 +2,12 @@ import DefaultTheme from 'vitepress/theme'
 import VpDemo from './components/VpDemo.vue'
 import VpApi from './components/VpApi.vue'
 import BaseButton from './components/BaseButton.vue'
+import SearchLayout from './components/SearchLayout.vue'
 import './custom.css'
 
 export default {
   extends: DefaultTheme,
+  Layout: SearchLayout,
   enhanceApp({ app }) {
     app.component('VpDemo', VpDemo)
     app.component('VpApi', VpApi)

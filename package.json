@@ -5,6 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "search:seed": "node services/search/bin/seed-demo.js",
+    "search:start": "node services/search/bin/serve.js",
+    "test:search": "node --test tests/",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -18,5 +21,8 @@
     "vitepress": "^1.6.4",
     "vue": "^3.5.27",
     "vue-component-meta": "^3.2.4"
+  },
+  "dependencies": {
+    "sql.js": "^1.13.0"
   }
 }

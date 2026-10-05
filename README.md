@@ -6,8 +6,9 @@
 
 - 🚀 **自动化 Demo 提取**：使用 `::: demo` 语法自动读取 `.vue` 文件并生成预览与源码。
 - 🌍 **内置国际化**：完善的中英文多语言切换支持。
-- 🔍 **全文搜索**：集成 VitePress 本地搜索功能。
+- 🔍 **全文搜索**：内置分版本检索片段服务，支持字段、接口名、错误码高亮和权限过滤。
 - 📊 **API 自动展示**：美观的组件属性（Attributes）表格。
+- 🛡️ **索引代次与权限**：新代次构建完成后切换；关系库查询时回查权限，撤回立即生效，后台刷新清除旧 ACL。
 - 🎨 **主题定制**：深度还原 Element Plus 的 UI 风格。
 
 ## 🚀 快速启动
@@ -18,26 +19,41 @@
 npm install
 ```
 
-### 2. 启动开发服务器
+### 2. 启动检索服务（可选，文档导航中的检索框需要）
 
 ```bash
-npm run docs:dev
+npm run search:seed
+npm run search:start
 ```
 
-### 3. 构建静态站点
+### 3. 启动开发服务器
+
+```bash
+SEARCH_ORIGIN=http://127.0.0.1:5180 npm run docs:dev
+```
+
+### 4. 构建静态站点
 
 ```bash
 npm run docs:build
 ```
 
-### 4. 预览构建效果
+### 5. 预览构建效果
 
 ```bash
 npm run docs:preview
 ```
 
+### 6. 运行检索服务测试
+
+```bash
+npm run test:search
+```
+
 ## 📂 项目结构
 
+- `services/search/`：检索片段 HTTP 服务、SQLite 关系库、分版本索引代次构建器
+- `tests/`：偏移、HTML、权限、中断续跑、版本和旧游标测试
 - `docs/`：文档根目录
   - `.vitepress/`：配置与主题
   - `components/`：组件说明文档

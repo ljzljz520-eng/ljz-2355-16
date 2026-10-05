@@ -38,3 +38,24 @@
 ## 3. 设计亮点
 - **零手动注册**：开发者只需在 `examples/` 文件夹下添加 `.vue` 文件，即可在任何 Markdown 中引用，极大提升了开发效率。
 - **极致还原**：不仅是颜色，在代码折叠交互、API 表格间距等细节上均贴合 Element Plus 规范。
+
+## 4. 检索片段服务实现记录（2026-10）
+
+### 4.1 架构
+- 使用 sql.js（WASM SQLite）实现关系库，表覆盖文档/版本/章节/授权/索引代次/checkpoint/active 指针。
+- 索引按版本和 generation 落盘：章节分片先写入 `generations/<id>/shards`，全部通过哈希校验后再写不可变 `index.json` 并切换 active pointer。
+- HTTP 服务提供搜索、章节写入、临时权限、后台 ACL 刷新、索引构建与 finalize 接口。
+
+### 4.2 偏移与分析
+- 明确区分 HTML UTF-16 原文、纯文本、规范化文本和 token 偏移。
+- 最终高亮偏移采用 Unicode 码点，前端使用 `Array.from` 切分，避免 emoji/增补平面被截坏。
+- 自然语言使用拉丁整词和 CJK bigram；代码标识符保留整词并拆出 camelCase、snake_case、数字片段。
+
+### 4.3 发布与权限
+- 构建中的 generation 不提供服务；无已发布索引时返回 503 `INDEX_NOT_READY`，不把未完成构建伪装成空结果。
+- draft 章节不进入发布索引；正文更新后新一代次未切换前仍只返回旧正文。
+- 查询时始终回查关系库，撤回立即生效；索引保存 ACL 快照用于物理收窄和后台清理，刷新后切换新一代次。
+
+### 4.4 测试
+- 新增 10 个 Node 内置 test 用例：多字节偏移、跨版本、中断续跑、HTML 片段、权限变化、旧游标、未发布章节和 HTTP API。
+- `npm run docs:build` 验证 VitePress 集成，导航中新增检索片段面板。

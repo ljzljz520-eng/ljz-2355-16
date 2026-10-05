@@ -9,6 +9,16 @@ export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
   appearance: true,
+  vite: {
+    server: {
+      proxy: {
+        '/api/search': {
+          target: process.env.SEARCH_ORIGIN ?? 'http://127.0.0.1:5180',
+          changeOrigin: true
+        }
+      }
+    }
+  },
 
   markdown: {
     config: (md) => {
@@ -72,7 +82,8 @@ export default defineConfig({
               text: '基础',
               items: [
                 { text: '安装', link: '/guide/installation' },
-                { text: '快速开始', link: '/guide/quickstart' }
+                { text: '快速开始', link: '/guide/quickstart' },
+                { text: '检索片段服务', link: '/guide/search-snippets' }
               ]
             }
           ],
@@ -128,9 +139,6 @@ export default defineConfig({
   },
 
   themeConfig: {
-    search: {
-      provider: 'local'
-    },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ]
