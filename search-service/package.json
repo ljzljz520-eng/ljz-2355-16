@@ -1,0 +1,11 @@
+{
+  "name": "doc-search-snippet-service",
+  "version": "1.0.0",
+  "description": "文档站检索片段服务：分版本索引、代次发布、偏移安全高亮与查询时权限回查",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/",
+    "start": "node src/server.js"
+  },
+  "license": "ISC"
+}

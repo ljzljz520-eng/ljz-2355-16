@@ -64,7 +64,8 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '指南', link: '/guide/installation', activeMatch: '/guide/' },
-          { text: '组件', link: '/components/button', activeMatch: '/components/' }
+          { text: '组件', link: '/components/button', activeMatch: '/components/' },
+          { text: '检索服务', link: '/guide/search-service', activeMatch: '/guide/' }
         ],
         sidebar: {
           '/guide/': [
@@ -72,7 +73,8 @@ export default defineConfig({
               text: '基础',
               items: [
                 { text: '安装', link: '/guide/installation' },
-                { text: '快速开始', link: '/guide/quickstart' }
+                { text: '快速开始', link: '/guide/quickstart' },
+                { text: '检索片段服务', link: '/guide/search-service' }
               ]
             }
           ],
